@@ -1,14 +1,16 @@
 package proyecto_logica2;
 
-public class Animal {
+public abstract class Animal {
     private String code;
     private String name;
     private int age;
+    private boolean adopted;
 
     public Animal(String code, String name, int age) {
         this.code = code;
         this.name = name;
         this.age = age;
+        this.adopted = false;
     }
 
     public String getCode() {
@@ -33,6 +35,14 @@ public class Animal {
 
     public void setAge(int age) {
         this.age = age;
+    }
+    
+    public boolean getAdopted() {
+        return adopted;
+    }
+
+    public void setAdopted(boolean adopted) {
+        this.adopted = adopted;
     }
     
 }
