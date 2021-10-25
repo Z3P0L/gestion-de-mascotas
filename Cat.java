@@ -1,20 +1,19 @@
 package proyecto_logica2;
 
-
 public class Cat extends Animal {
-    private int maxlifes;
+    private int maxLifes;
 
-    public Cat(int maxlifes, String code, String name, int age) {
+    public Cat(String code, String name, int age, int maxLifes) {
         super(code, name, age);
-        this.maxlifes = maxlifes;
+        this.maxLifes = maxLifes;
     }
 
-    public int getMaxlifes() {
-        return maxlifes;
+    public int getMaxLifes() {
+        return maxLifes;
     }
 
-    public void setMaxlifes(int maxlifes) {
-        this.maxlifes = maxlifes;
+    public void setMaxLifes(int maxLifes) {
+        this.maxLifes = maxLifes;
     }
     
 }
