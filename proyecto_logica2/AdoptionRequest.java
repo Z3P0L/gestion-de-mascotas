@@ -4,13 +4,13 @@ public class AdoptionRequest {
     private String code;
     private Adopter client;
     private Animal pet;
-    private double voluntaryDonation;
+    private double donation;
 
-    public AdoptionRequest(String code, Adopter client, Animal pet, double voluntaryDonation) {
+    public AdoptionRequest(String code, Adopter client, Animal pet, double donation) {
         this.code = code;
         this.client = client;
         this.pet = pet;
-        this.voluntaryDonation = voluntaryDonation;
+        this.donation = donation;
     }
 
     public String getCode() {
@@ -37,12 +37,12 @@ public class AdoptionRequest {
         this.pet = pet;
     }
 
-    public double getVoluntaryDonation() {
-        return voluntaryDonation;
+    public double getDonation() {
+        return donation;
     }
 
-    public void setVoluntaryDonation(double voluntaryDonation) {
-        this.voluntaryDonation = voluntaryDonation;
+    public void setDonation(double donation) {
+        this.donation = donation;
     }
     
     
