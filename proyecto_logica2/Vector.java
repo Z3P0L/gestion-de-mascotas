@@ -55,7 +55,9 @@ public class Vector {
         for (int j = 0; j < count; j++) {
             if (vector[j] instanceof AdoptionRequest) {
                 if (((AdoptionRequest) vector[j]).getPet().getCode().equalsIgnoreCase(code)) {
-                    adoption = vector[j];
+                    if (((AdoptionRequest) vector[j]).getDonation() == FindGreaterDonation(code).getDonation()) {
+                        adoption = vector[j];
+                    }
                 }
             }
         }
