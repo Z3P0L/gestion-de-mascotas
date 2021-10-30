@@ -26,10 +26,10 @@ public class Main extends javax.swing.JFrame {
 
         jPanelGeneral = new javax.swing.JPanel();
         jPanelContent = new javax.swing.JPanel();
-        jBtnAdopt = new custom_components.JPlainButton();
-        jBtnInfo = new custom_components.JPlainButton();
-        jBtnManage = new custom_components.JPlainButton();
-        jLabel1 = new javax.swing.JLabel();
+        jBtnAdopt = new custom_components.JRoundButton();
+        jBtnInfo = new custom_components.JRoundButton();
+        jBtnManage = new custom_components.JRoundButton();
+        petImage = new javax.swing.JLabel();
         jPanelMain = new custom_components.JPanelGradient();
         jLTitle = new javax.swing.JLabel();
         Circle2 = new javax.swing.JLabel();
@@ -84,8 +84,8 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/adopted-pet.jpeg"))); // NOI18N
+        petImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        petImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/adopted-pet.jpeg"))); // NOI18N
 
         javax.swing.GroupLayout jPanelContentLayout = new javax.swing.GroupLayout(jPanelContent);
         jPanelContent.setLayout(jPanelContentLayout);
@@ -98,7 +98,7 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jBtnManage, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
                     .addComponent(jBtnInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(petImage)
                 .addGap(40, 40, 40))
         );
         jPanelContentLayout.setVerticalGroup(
@@ -113,7 +113,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelContentLayout.createSequentialGroup()
                 .addContainerGap(34, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(petImage)
                 .addGap(24, 24, 24))
         );
 
@@ -242,9 +242,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jBtnInfo;
     private javax.swing.JButton jBtnManage;
     private javax.swing.JLabel jLTitle;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanelContent;
     private javax.swing.JPanel jPanelGeneral;
     private javax.swing.JPanel jPanelMain;
+    private javax.swing.JLabel petImage;
     // End of variables declaration//GEN-END:variables
 }
