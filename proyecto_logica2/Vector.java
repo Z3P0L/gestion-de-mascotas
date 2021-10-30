@@ -299,20 +299,4 @@ public class Vector {
         return percentage;
     }
 
-    public void printVector() {
-        for (int i = 0; i < count; i++) {
-            if (vector[i] instanceof Animal) {
-                System.out.println(((Animal) vector[i]).getName());
-            }
-
-            if (vector[i] instanceof Adopter) {
-                System.out.println(((Adopter) vector[i]).getName());
-            }
-
-            if (vector[i] instanceof AdoptionRequest) {
-                System.out.println("Solicitud: " + ((AdoptionRequest) vector[i]).getCode()
-                        + "\tAdoptado: " + ((AdoptionRequest) vector[i]).getPet().getAdopted());
-            }
-        }
-    }
 }
