@@ -49,17 +49,20 @@ public class Vector {
         return null;
     }
 
-    public Object[] SearchAdoptedPet(String code) {
-        Object[] adoptedPet = new Object[2];
+    public Object SearchAdoptedPet(String code) {
+        Object adoption = null;
 
         for (int j = 0; j < count; j++) {
-            if (((AdoptionRequest) vector[j]).getPet().getCode().equalsIgnoreCase(code)) {
-                adoptedPet[0] = ((AdoptionRequest) vector[j]).getPet();
-                adoptedPet[1] = ((AdoptionRequest) vector[j]).getClient();
+            if (vector[j] instanceof AdoptionRequest) {
+                if (((AdoptionRequest) vector[j]).getPet().getCode().equalsIgnoreCase(code)) {
+                    if (((AdoptionRequest) vector[j]).getDonation() == FindGreaterDonation(code).getDonation()) {
+                        adoption = vector[j];
+                    }
+                }
             }
         }
 
-        return adoptedPet;
+        return adoption;
     }
 
     public boolean Remove(String code) {
@@ -95,11 +98,22 @@ public class Vector {
     }
 
     public boolean Adopt(String code) {
+        AdoptionRequest greaterAdoption = FindGreaterDonation(code);
+
+        if (greaterAdoption != null) {
+            greaterAdoption.getPet().setAdopted(true);
+            return true;
+        }
+
+        return false;
+    }
+
+    public AdoptionRequest FindGreaterDonation(String code) {
         double greater = -1;
         int index = -1;
 
         for (int i = 0; i < count; i++) {
-            if (((AdoptionRequest) vector[i]).getPet().getCode().equalsIgnoreCase(code)) {
+            if (vector[i] instanceof AdoptionRequest && ((AdoptionRequest) vector[i]).getPet().getCode().equalsIgnoreCase(code)) {
                 if (((AdoptionRequest) vector[i]).getDonation() > greater) {
                     greater = ((AdoptionRequest) vector[i]).getDonation();
                     index = i;
@@ -108,11 +122,10 @@ public class Vector {
         }
 
         if (index != -1) {
-            ((AdoptionRequest) vector[index]).getPet().setAdopted(true);
-            return true;
+            return ((AdoptionRequest) vector[index]);
         }
 
-        return false;
+        return null;
     }
 
     public Animal[] AvailablePets(String petType) {
@@ -124,8 +137,22 @@ public class Vector {
             }
         }
 
-        Animal[] pets = new Animal[amount];
+        if (amount == 0) {
+            return null;
+        }
+
+        Animal[] pets = null;
         int index = 0;
+
+        if (petType.equalsIgnoreCase("Dog")) {
+            pets = new Dog[amount];
+        }
+        if (petType.equalsIgnoreCase("Cat")) {
+            pets = new Cat[amount];
+        }
+        if (petType.equalsIgnoreCase("Fish")) {
+            pets = new Fish[amount];
+        }
 
         for (int j = 0; j < count; j++) {
             if (vector[j].getClass().getName().endsWith(petType) && !((Animal) vector[j]).getAdopted()) {
@@ -137,26 +164,42 @@ public class Vector {
         return pets;
     }
 
-    public Animal[] PetsOfPerson(String code) {
+    public Animal[] PetsOfPerson(String clientCode) {
         int amount = 0;
 
         for (int i = 0; i < count; i++) {
-            boolean isAdopted = ((AdoptionRequest) vector[i]).getPet().getAdopted();
+            if (vector[i] instanceof AdoptionRequest) {
+                boolean isAdopted = ((AdoptionRequest) vector[i]).getPet().getAdopted();
 
-            if (isAdopted && ((AdoptionRequest) vector[i]).getClient().getId().equalsIgnoreCase(code)) {
-                amount++;
+                if (isAdopted && ((AdoptionRequest) vector[i]).getClient().getId().equalsIgnoreCase(clientCode)) {
+                    String petCode = ((AdoptionRequest) vector[i]).getPet().getCode();
+
+                    if (((AdoptionRequest) vector[i]).getDonation() == FindGreaterDonation(petCode).getDonation()) {
+                        amount++;
+                    }
+                }
             }
+        }
+
+        if (amount == 0) {
+            return null;
         }
 
         Animal[] pets = new Animal[amount];
         int index = 0;
 
         for (int j = 0; j < count; j++) {
-            boolean isAdopted = ((AdoptionRequest) vector[j]).getPet().getAdopted();
+            if (vector[j] instanceof AdoptionRequest) {
+                boolean isAdopted = ((AdoptionRequest) vector[j]).getPet().getAdopted();
 
-            if (isAdopted && ((AdoptionRequest) vector[j]).getClient().getId().equalsIgnoreCase(code)) {
-                pets[index] = ((AdoptionRequest) vector[j]).getPet();
-                index++;
+                if (isAdopted && ((AdoptionRequest) vector[j]).getClient().getId().equalsIgnoreCase(clientCode)) {
+                    String petCode = ((AdoptionRequest) vector[j]).getPet().getCode();
+
+                    if (((AdoptionRequest) vector[j]).getDonation() == FindGreaterDonation(petCode).getDonation()) {
+                        pets[index] = ((AdoptionRequest) vector[j]).getPet();
+                        index++;
+                    }
+                }
             }
         }
 
@@ -168,15 +211,17 @@ public class Vector {
         Animal pet = null;
 
         for (int i = 0; i < count; i++) {
-            String code = ((AdoptionRequest) vector[i]).getPet().getCode();
-            int requests = CountRequests(code);
+            if (vector[i] instanceof AdoptionRequest) {
+                String code = ((AdoptionRequest) vector[i]).getPet().getCode();
+                int requests = CountRequests(code);
 
-            if (requests > greater) {
-                greater = requests;
-                pet = ((AdoptionRequest) vector[i]).getPet();
+                if (requests > greater) {
+                    greater = requests;
+                    pet = ((AdoptionRequest) vector[i]).getPet();
+                }
             }
         }
-
+        
         return pet;
     }
 
@@ -185,12 +230,14 @@ public class Vector {
         Animal pet = null;
 
         for (int i = 0; i < count; i++) {
-            String code = ((AdoptionRequest) vector[i]).getPet().getCode();
-            int requests = CountRequests(code);
+            if (vector[i] instanceof AdoptionRequest) {
+                String code = ((AdoptionRequest) vector[i]).getPet().getCode();
+                int requests = CountRequests(code);
 
-            if (requests < least) {
-                least = requests;
-                pet = ((AdoptionRequest) vector[i]).getPet();
+                if (requests < least) {
+                    least = requests;
+                    pet = ((AdoptionRequest) vector[i]).getPet();
+                }
             }
         }
 
@@ -201,8 +248,10 @@ public class Vector {
         int counter = 0;
 
         for (int i = 0; i < count; i++) {
-            if (((AdoptionRequest) vector[i]).getPet().getCode().equalsIgnoreCase(code)) {
-                counter++;
+            if (vector[i] instanceof AdoptionRequest) {
+                if (((AdoptionRequest) vector[i]).getPet().getCode().equalsIgnoreCase(code)) {
+                    counter++;
+                }
             }
         }
 
@@ -210,15 +259,20 @@ public class Vector {
     }
 
     public double TotalCollected() {
-        double total = 0;
+        double donations = 0;
 
         for (int i = 0; i < count; i++) {
-            if (((AdoptionRequest) vector[i]).getPet().getAdopted()) {
-                total += ((AdoptionRequest) vector[i]).getDonation();
+            if (vector[i] instanceof AdoptionRequest) {
+                String code = ((AdoptionRequest) vector[i]).getPet().getCode();
+                AdoptionRequest greaterAdoption = FindGreaterDonation(code);
+
+                if (((AdoptionRequest) vector[i]).getDonation() == greaterAdoption.getDonation()) {
+                    donations += ((AdoptionRequest) vector[i]).getDonation();
+                }
             }
         }
 
-        return total;
+        return donations;
     }
 
     public double AdoptedPetsPercent(String petType) {
@@ -226,15 +280,17 @@ public class Vector {
         double percentage;
 
         for (int i = 0; i < count; i++) {
-            if (((Animal) vector[i]).getClass().getName().endsWith(petType)) {
-                if (((Animal) vector[i]).getAdopted()) {
-                    adopted++;
+            if (vector[i] instanceof Animal) {
+                if (((Animal) vector[i]).getClass().getName().endsWith(petType)) {
+                    if (((Animal) vector[i]).getAdopted()) {
+                        adopted++;
+                    }
+                    pets++;
                 }
-                pets++;
             }
         }
 
-        percentage = ((double) (adopted / pets)) * 100;
+        percentage = ((double) adopted / pets) * 100;
 
         return percentage;
     }
@@ -244,4 +300,5 @@ public class Vector {
 
         return percentage;
     }
+
 }

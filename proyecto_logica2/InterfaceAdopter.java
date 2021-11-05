@@ -1,9 +1,5 @@
 package proyecto_logica2;
 
-/**
- *
- * @author Moises Herrera
- */
 public class InterfaceAdopter extends javax.swing.JFrame {
 
     /** Creates new form InterfaceAdopter */
